@@ -193,7 +193,7 @@ class ParseResourceTestCase(BaseTestCase):
         self.assertEqual(item.data['id'], 111)
         self.assertEqual(item.schema, self.item_schema)
 
-    def test_eq_and_ne_operators(self):
+    def test_eq_operators(self):
         data = {
             'objects': [
                 {'id': 111}
@@ -202,10 +202,7 @@ class ParseResourceTestCase(BaseTestCase):
         app = self.resource_from_data(
             url="appurl.com", data=data, schema=self.schema)
 
-        # Uses __eq__
-        self.assertDictContainsSubset(dict(objects=[dict(id=111)]), app.data)
-        # Uses __ne__
-        self.assertDictEqual(dict(objects=[dict(id=111)]), app.data)
+        self.assertDictEqual(data, app)
 
     def test_wraps_array_objects_as_resources_even_without_items_key(self):
         data = {
